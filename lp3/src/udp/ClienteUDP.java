@@ -13,7 +13,7 @@ public class ClienteUDP
         {
             DatagramPacket pacote;
             byte[] data;
-
+            byte[] resData = new byte[1024];
             DatagramSocket client = new DatagramSocket();
             InetAddress address = InetAddress.getByName("localhost");
             Scanner entrada = new Scanner(System.in);
@@ -32,12 +32,13 @@ public class ClienteUDP
             client.send(pacote);
 
             System.out.println("aguardando resposta");
-            byte[] resData = new byte[1024];
+
             DatagramPacket pkg = new DatagramPacket(resData, resData.length);
             client.receive(pkg);
             String msgCliente = new String(pkg.getData(), 0, pkg.getLength());
             System.out.println("pacote recebido");
 //            String resultado = new String(pkg.getData());
+            System.out.println("testando");
             System.out.println("teste " + msgCliente);
             client.close();
         }

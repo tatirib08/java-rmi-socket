@@ -7,20 +7,18 @@ import java.net.DatagramSocket;
 public class ServidorUDP
 {
     public static void main(String[] args) throws SocketException {
-        DatagramSocket server = new DatagramSocket(6200);
-        System.out.println("server começou");
+
         try
         {
+            DatagramSocket server = new DatagramSocket(6200);
+            System.out.println("server começou");
             Calculadora calc = new Calculadora();
-
-
+            byte[] data = new byte[1024];
+            byte[] resData = new byte[1024];
             while(true)
             {
-                byte[] data = new byte[1024];
-                DatagramPacket pacote;
 
-
-                pacote = new DatagramPacket(data, data.length);
+                DatagramPacket pacote = new DatagramPacket(data, data.length);
 
                 server.receive(pacote);
 
@@ -31,12 +29,14 @@ public class ServidorUDP
                 float res = calc.calcula(msg);
                 System.out.println("Resultado: "+ res);
 
-                byte[] resData;
-                String message = (String) Float.toString(res);
-                resData = message.getBytes();
-                DatagramPacket pkg = new DatagramPacket(resData, resData.length, pacote.getAddress(), 6200);
-                server.send(pkg);
 
+                InetAddress address = pacote.getAddress();
+                String message = String.valueOf(res);
+                resData = message.getBytes();
+                System.out.println("PORTA -> " + pacote.getPort());
+                DatagramPacket pkg = new DatagramPacket(resData, resData.length, pacote.getAddress(), pacote.getPort());
+                server.send(pkg);
+                System.out.println("AQUIIIIIIIIIIII");
 
             }
 
@@ -45,12 +45,7 @@ public class ServidorUDP
         {
             System.out.println(e.getMessage());
         }
-        finally
-        {
-            if(server!=null && !server.isClosed()){
-                server.close();
-            }
-        }
+
 
     }
 }

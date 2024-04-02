@@ -37,7 +37,7 @@ public class Calculadora
     protected float calcula(String solicitacao)
     {
         float resultado = 0;
-        String s[] = solicitacao.split(";");
+        String[] s = solicitacao.split(";");
         float num1 = Float.parseFloat(s[0]);
         float num2 = Float.parseFloat(s[1]);
         String op = s[2];
