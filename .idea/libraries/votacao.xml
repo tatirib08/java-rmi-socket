@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="votacao">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lp3/out/production/lp3/votacao.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -1,24 +1,22 @@
-package multithread;
+package votacao;
 
-import tcp.Contato;
-import tcp.ListaAgenda;
-import multithread.HandlerTcp;
-import multithread.ClientAgenda;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import votacao.Handler;
+
+import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
+import java.util.Arrays;
 
-/* TCP */
-public class ServerAgenda
+public class Server
 {
-    public static void main(String[] args)
+    public static void main(String[] args) throws SocketException
     {
         try
         {
             /* instancia o servidor */
             ServerSocket server = new ServerSocket(5000);
-
+            Votos votacao = new Votos();
             while(true)
             {
 
@@ -26,16 +24,21 @@ public class ServerAgenda
                 System.out.println("Cliente conectado" + client.getInetAddress().getHostAddress());
 
                 /* create a handler for clients */
-                HandlerTcp clientHandler = new HandlerTcp(client);
+
+                Handler clientHandler = new Handler(client, votacao);
 
                 Thread thread = new Thread(clientHandler);
                 thread.start();
+//                thread.join();
+
+
 
             }
         }
         catch (Exception e)
         {
             System.out.printf("Erro: " + e.getMessage());
+            System.out.println(Arrays.toString(e.getStackTrace()));
         }
     }
 }

@@ -3,12 +3,12 @@ package multithread;
 
 public class Threads
 {
-    public static void main(String args[]) {
-        Thread t1 = new Thread();
-        MeuRunnable r = new MeuRunnable();
-//        System.out.println(t1.currentThread().
-//                getName());
+    public static void main(String[] args)
+    {
 
+        MeuRunnable r = new MeuRunnable();
+        Thread t1 = new Thread(r);
+        t1.start();
         Thread t2 = new Thread(r);
         t2.start();
         Thread t3 = new Thread(r);
